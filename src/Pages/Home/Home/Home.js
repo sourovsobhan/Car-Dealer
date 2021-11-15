@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import About from "../../About/About";
 import AddService from "../../AddService/AddService";
-import DashBoard from "../../DashBoard/DashBoard";
+
 import Service from "../../Services/Service/Service";
 import Banner from "../Banner/Banner";
 import Feature from "../Feature/Feature";
@@ -29,7 +29,7 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <AddService></AddService>
+
       <Contact></Contact>
     </div>
   );

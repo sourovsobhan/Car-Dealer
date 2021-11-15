@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import initializeFirebase from "../Pages/Login/Firebase/firebase.init";
+import axios from "axios";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -17,6 +18,7 @@ const useFirebase = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState("");
   const auth = getAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const googleProvider = new GoogleAuthProvider();
 
@@ -34,6 +36,39 @@ const useFirebase = () => {
       .finally(() => setIsLoading(false));
   };
 
+  //save user to db
+
+  const saveUserToDB = (email, name) => {
+    const data = {
+      email,
+      name,
+    };
+
+    axios
+      .post("http://localhost:5000/users", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/users/${user.email}`)
+      .then((data) => {
+        console.log(data);
+        if (data.data.role === "admin") {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+      })
+      .catch((err) => console.dir)
+      .finally(() => {});
+  }, [user]);
+
   const registerUser = (email, password, name, history) => {
     setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
@@ -41,6 +76,7 @@ const useFirebase = () => {
         setAuthError("");
         const newUser = { email, displayName: name };
         setUser(newUser);
+        saveUserToDB(email, name);
         // send name to firebase after creation
         updateProfile(auth.currentUser, {
           displayName: name,
@@ -102,6 +138,7 @@ const useFirebase = () => {
     isLoading,
     authError,
     signInWithGoogle,
+    isAdmin,
   };
 };
 

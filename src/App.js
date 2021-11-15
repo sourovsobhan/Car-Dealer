@@ -14,6 +14,7 @@ import AuthProvider from "./context/AuthProvider/AuthProvider";
 import PrivateRoute from "./Pages/Login/PrivateRoute/PrivateRoute";
 import Details from "./Pages/Details/Details/Details";
 import ManageServices from "./Pages/Services/ManageServices/ManageServices";
+import DashBoard from "./Pages/Dashborad/DashBoard";
 
 function App() {
   return (
@@ -56,6 +57,9 @@ function App() {
             </Route>
             <Route path="/manageServices">
               <ManageServices></ManageServices>
+            </Route>
+            <Route path="/dashboard">
+              <DashBoard></DashBoard>
             </Route>
           </Switch>
           <Footer></Footer>

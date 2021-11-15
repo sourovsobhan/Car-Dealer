@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import "./Navigation.css";
+
 const Navigation = () => {
   const { user, logOut } = useAuth();
   return (
@@ -51,6 +52,9 @@ const Navigation = () => {
                   LogOut
                 </button>
                 <p>{user.displayName}</p>
+                <li className="nav-item menu-link">
+                  <Link to="/dashboard">DashBoard</Link>
+                </li>
               </div>
             ) : (
               <li className="nav-item menu-link">
