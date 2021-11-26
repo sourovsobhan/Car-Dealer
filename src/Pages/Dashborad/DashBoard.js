@@ -24,6 +24,9 @@ import useAuth from "../../hooks/useAuth";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import AddService from "../AddService/AddService";
 import ManageAllProduct from "../ManageAllProduct/ManageAllProduct";
+import Review from "../Review/Review";
+import HomeReview from "./../Home/HomeReview/HomeReview";
+import MyOrder from "./../ManageOrder/MyOrder/MyOrder";
 
 const drawerWidth = 240;
 
@@ -218,6 +221,15 @@ function DashBoard(props) {
           </Route>
           <Route path={`${path}/manageProducts`}>
             <ManageAllProduct></ManageAllProduct>
+          </Route>
+          <Route path={`${path}/review`}>
+            <Review></Review>
+          </Route>
+          <Route path={`${path}/myReviews`}>
+            <HomeReview></HomeReview>
+          </Route>
+          <Route path={`${path}/myOrders`}>
+            <MyOrder></MyOrder>
           </Route>
         </Switch>
       </Box>

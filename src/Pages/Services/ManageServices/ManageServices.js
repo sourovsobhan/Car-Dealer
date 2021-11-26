@@ -4,12 +4,12 @@ import axios from "axios";
 const ManageServices = () => {
   const [services, setServices] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/services")
+    fetch("https://immense-sands-24458.herokuapp.com/services")
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, []);
   const handleDelete = (id) => {
-    const url = `http://localhost:5000/services/${id}`;
+    const url = `https://immense-sands-24458.herokuapp.com/services/${id}`;
     axios.delete(url).then((data) => {
       if (data.data.deletedCount > 0) {
         alert("deleted successfully");

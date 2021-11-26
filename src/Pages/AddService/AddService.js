@@ -5,15 +5,17 @@ import "./AddService.css";
 const AddService = () => {
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
-    axios.post("http://localhost:5000/services", data).then((res) => {
-      console.log(res.data);
+    axios
+      .post("https://immense-sands-24458.herokuapp.com/services", data)
+      .then((res) => {
+        console.log(res.data);
 
-      if (res.data.insertedId) {
-        alert("successfully addeded");
-        reset();
-      }
-      console.log(res);
-    });
+        if (res.data.insertedId) {
+          alert("successfully addeded");
+          reset();
+        }
+        console.log(res);
+      });
 
     console.log(data);
   };

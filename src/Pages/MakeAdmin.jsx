@@ -6,7 +6,7 @@ const MakeAdmin = () => {
   const makeAdmnin = () => {
     const data = { email };
     axios
-      .put("http://localhost:5000/users", data)
+      .put("https://immense-sands-24458.herokuapp.com/users", data)
       .then((res) => {
         console.log(res.data);
       })

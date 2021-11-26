@@ -3,7 +3,7 @@ const ManageOrder = () => {
   const [services, setServices] = useState([]);
   console.log(services);
   useEffect(() => {
-    fetch("http://localhost:5000/orders")
+    fetch("https://immense-sands-24458.herokuapp.com/orders")
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, []);

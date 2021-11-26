@@ -29,6 +29,7 @@ const useFirebase = () => {
       .then((result) => {
         const user = result.user;
         setAuthError("");
+        window.location.replace("/");
       })
       .catch((error) => {
         setAuthError(error.message);
@@ -45,7 +46,7 @@ const useFirebase = () => {
     };
 
     axios
-      .post("http://localhost:5000/users", data)
+      .post("https://immense-sands-24458.herokuapp.com/users", data)
       .then((res) => {
         console.log(res);
       })
@@ -56,7 +57,7 @@ const useFirebase = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/${user.email}`)
+      .get(`https://immense-sands-24458.herokuapp.com/users/${user.email}`)
       .then((data) => {
         console.log(data);
         if (data.data.role === "admin") {
@@ -83,7 +84,7 @@ const useFirebase = () => {
         })
           .then(() => {})
           .catch((error) => {});
-        history.replace("/");
+        window.location.replace("/");
       })
       .catch((error) => {
         setAuthError(error.message);
@@ -96,7 +97,7 @@ const useFirebase = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const destination = location?.state?.from || "/";
-        history.replace(destination);
+        window.location.replace(destination);
         setAuthError("");
       })
       .catch((error) => {

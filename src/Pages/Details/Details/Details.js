@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useForm } from "react-hook-form";
 import { useParams } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 
@@ -7,11 +7,32 @@ const Details = () => {
   const { serviceId } = useParams();
 
   const [service, setService] = useState({});
-  const [phone, setPhone] = useState("");
-  const [adress, setAddress] = useState({});
 
+  const onSubmit = (data) => {
+    data.email = user?.email;
+    data.status = "pending";
+    fetch("http://localhost:5000/orders", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.insertedId) {
+          alert("welcome Your ordered successfull");
+        }
+      });
+    console.log(data);
+  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   useEffect(() => {
-    fetch(`http://localhost:5000/services/${serviceId}`)
+    fetch(`https://immense-sands-24458.herokuapp.com/services/${serviceId}`)
       .then((res) => res.json())
       .then((data) => setService(data));
   }, []);
@@ -35,59 +56,52 @@ const Details = () => {
           </div>
         </div>
       </div>
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">
-                Email address:
-              </label>
-              <input
-                type="email"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={user.email}
-              />
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">
-                Name:
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={user.displayName}
-              />
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">
-                Phone:
-              </label>
-              <input
-                type="email"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="Phone Number"
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label">
-                Address
-              </label>
-              <textarea
-                onChange={(e) => setAddress(e.target.value)}
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"
-              ></textarea>
-              <button type="button" class="btn btn-warning">
-                place order
-              </button>
-            </div>
-          </div>
-        </div>
+      <div className="col-md-8 p-5">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            {...register("email")}
+            placeholder="Email"
+            defaultValue={user.email}
+            className="p-2 m-2 w-100 input-field"
+          />
+          <input
+            {...register("name")}
+            placeholder="Name"
+            defaultValue={service.name}
+            className="p-2 m-2 w-100 input-field"
+          />
+
+          <input
+            {...register("description")}
+            defaultValue={service.description}
+            placeholder="Description"
+            className="p-2 m-2 w-100 input-field"
+          />
+
+          <input
+            {...register("image", { required: true })}
+            placeholder="Image Link"
+            defaultValue={service.img}
+            className="p-2 m-2 w-100 input-field"
+          />
+
+          <input
+            {...register("price", { required: true })}
+            placeholder="Price"
+            defaultValue={service.price}
+            type="price"
+            className="p-2 m-2 w-100 input-field"
+          />
+          <br />
+
+          {errors.exampleRequired && <span>This field is required</span>}
+
+          <input
+            type="submit"
+            value="Order now"
+            className="btn btn-info w-50"
+          />
+        </form>
       </div>
     </div>
   );
